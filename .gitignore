@@ -10,3 +10,5 @@
 .pio
 
 include/login.h
+
+.vs
