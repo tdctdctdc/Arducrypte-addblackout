@@ -37,37 +37,22 @@ const animationMode = document.getElementById('animation-mode');
 
 
 // blackout en changeant juste la couleur
-//mode 1 avec rightShift
 let previousColor = data.color; // Store the previous color
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === "Backspace") {
-        previousColor = data.color; // Store the current color
+    if (event.key === 'Backspace') { // BACKSPACE
+        previousColor = data.color; // Save the current color
         data.color = "#000000"; // Change to black
-        update_color();
+        server.sendColor(data.color); // Send updated color to the server
     }
-    if (event.key === "µ" || "*") {
-        //previousAnimation = data.animation; // Store the current animation
-        data.animation = 1; // Set animation to 1
-
-        const animationNumber = 1;
-        animationMode.textContent = animationNumber.toString();
-        logThis("Animation changed to " + data.animation)
-
-        server.sendAnimation(data.animation);
-    }
-});
+}, false);
 
 document.addEventListener('keyup', (event) => {
-    if (event.key === "Backspace") {
-        data.color = previousColor; // Restore the original color
-        update_color();
+    if (event.key === 'Backspace') {
+        data.color = previousColor;
+        server.sendColor(data.color);
     }
-    if (event.key === "µ" || "*") {
-        data.color = "#000000"; // Blackout when key is released
-        update_color();
-    }
-});
+}, false);
 
 
 //Global events
