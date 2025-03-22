@@ -41,18 +41,31 @@ const animationMode = document.getElementById('animation-mode');
 let previousColor = data.color; // Store the previous color
 
 document.addEventListener('keydown', (event) => {
+    if ( (event.key === "p") || (event.key === "P") ) {
+        newBpm = data.bpm * 2; // Double the BPM
+        logThis("PUTE" + newBpm + data.bpm);
+        updateBpm(newBpm);
+    }
+    if ( (event.key === "m") || (event.key === "M") ) {
+        newBpm = Math.max(1, data.bpm / 2); // Half the BPM, but not lower than 1
+        updateBpm(newBpm);
+    }
+});
+
+
+document.addEventListener('keydown', (event) => {
     if (event.key === "Backspace") {
         previousColor = data.color; // Store the current color
         data.color = "#000000"; // Change to black
         update_color();
     }
-    if (event.key === "µ" || "*") {
+    if ( (event.key === "µ") || (event.key === "*") ) {
         //previousAnimation = data.animation; // Store the current animation
         data.animation = 1; // Set animation to 1
 
         const animationNumber = 1;
         animationMode.textContent = animationNumber.toString();
-        logThis("Animation changed to " + data.animation)
+        logThis("Animation changed to " + data.animation);
 
         server.sendAnimation(data.animation);
     }
@@ -63,7 +76,7 @@ document.addEventListener('keyup', (event) => {
         data.color = previousColor; // Restore the original color
         update_color();
     }
-    if (event.key === "µ" || "*") {
+    if ( (event.key === "µ") || (event.key === "*") ) {
         data.color = "#000000"; // Blackout when key is released
         update_color();
     }
